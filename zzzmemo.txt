@@ -1,0 +1,17 @@
+git for windows
+dotnet-sdk-8.0.407-win-x64.exe
+
+拡張機能 Rest Client
+
+mkdir sample7_sln
+cd sample7_sln
+dotnet new sln -n sample7
+dotnet new webapi -n sample7 --framework net8.0
+dotnet sln add sample7/sample7.csproj
+echo "# Ignore files and directories" > .gitignore
+echo "/bin/" >> .gitignore
+echo "/obj/" >> .gitignore
+
+Codeのソース管理でリポジトリ初期化
+ブランチを発行
+
