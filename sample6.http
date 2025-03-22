@@ -1,0 +1,25 @@
+@sample6_HostAddress = http://localhost:5268
+
+GET {{sample6_HostAddress}}/test5/
+Accept: application/json
+
+###
+
+POST {{sample6_HostAddress}}/test5/
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "age": 30
+}
+
+###
+
+POST {{sample6_HostAddress}}/test5/
+Content-Type: application/json
+
+{
+
+}
+
