@@ -8,10 +8,36 @@ cd sample7_sln
 dotnet new sln -n sample7
 dotnet new webapi -n sample7 --framework net8.0
 dotnet sln add sample7/sample7.csproj
-echo "# Ignore files and directories" > .gitignore
+echo "# Ignore files and directories" > .gitignore これだめ
 echo "/bin/" >> .gitignore
 echo "/obj/" >> .gitignore
 
 Codeのソース管理でリポジトリ初期化
 ブランチを発行
 
+これにMicrosoft.EntityFrameworkCoreも含まれる
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+--DBからモデルを作成
+dotnet tool install --global dotnet-ef
+
+--DBからモデルを作成　コマンド　--forceで上書きする
+dotnet ef dbcontext scaffold "Host=localhost;Database=postgres;Username=postgres;Password=???" Npgsql.EntityFrameworkCore.PostgreSQL -o Models --force
+
+
+これポスグレでもマイグレーションに必要
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer 
+
+モデルからコントローラを作成
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+モデルからコントローラを作成
+dotnet tool install --global dotnet-aspnet-codegenerator
+
+モデルからコントローラを作成
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+モデルからコントローラを作成する modelのとこだけハイフン二つ必要
+otnet aspnet-codegenerator controller -name SampleTableController --model SampleTable -dc PostgresContext -outDir Controllers
