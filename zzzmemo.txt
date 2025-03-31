@@ -41,3 +41,38 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 
 モデルからコントローラを作成する modelのとこだけハイフン二つ必要
 otnet aspnet-codegenerator controller -name SampleTableController --model SampleTable -dc PostgresContext -outDir Controllers
+
+
+
+
+
+
+
+
+# ベースイメージとして.NET SDKを使用（ビルドステージ）
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /source
+
+# 必要なファイルをコピーしてビルド
+COPY *.csproj .
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish -c Release -o /app
+
+# 実行用のランタイムイメージ
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["dotnet", "MyWebApi.dll"]
+
+dotnet publish -c Release -o ./app
+http://localhost:5028/weatherforecast/
+http://localhost:8080/weatherforecast/
+#build
+docker build -t your-app-name .
+#run
+docker run -d -p 8080:8080 --name your-app-container your-app-name
+#log
+docker logs your-app-container
+
